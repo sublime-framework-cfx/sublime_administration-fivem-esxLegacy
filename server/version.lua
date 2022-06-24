@@ -3,7 +3,7 @@
 -------------------------------------------------------------------------------------------
 -- Ne pas toucher! / Don't touch it!
 local Version = LoadResourceFile(GetCurrentResourceName(), 'version.json')
-local HTTPrequest = "https://raw.githubusercontent.com/SUBLiME-Association/version-script-sublime/main/sublime-administration.json"
+local HTTPrequest = "https://raw.githubusercontent.com/SUBLiME-Association/sublime_administration-fivem-esxLegacy/main/sublime-administration.json"
 
 Citizen.CreateThread(function()
 	local _v = json.decode(Version)
