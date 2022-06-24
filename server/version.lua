@@ -2,11 +2,11 @@
 --------------------------------VERSION CHECK----------------------------------------------
 -------------------------------------------------------------------------------------------
 -- Ne pas toucher! / Don't touch it!
-local Version = LoadResourceFile(GetCurrentResourceName(), 'version.json')
-local HTTPrequest = "https://raw.githubusercontent.com/SUBLiME-Association/sublime_administration-fivem-esxLegacy/main/sublime-administration.json"
 
+local HTTPrequest = "https://raw.githubusercontent.com/SUBLiME-Association/sublime_administration-fivem-esxLegacy/main/version.json"
 Citizen.CreateThread(function()
-	local _v = json.decode(Version)
+	local Version, _v = LoadResourceFile(GetCurrentResourceName(), 'version.json')
+	if Version then _v = json.decode(Version) else return print("[^1ERROR^0] Impossible de vérifier la version car le fichier n'existe pas!") end
 	if json.encode(_v.enable) == "true" then
 		PerformHttpRequest(HTTPrequest, function(code, res, headers)
 			if code == 200 then
