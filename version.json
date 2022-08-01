@@ -1,7 +1,7 @@
 {
     "enable": true,
 	"script": "sublime_administration",
-    "version": "1.5.0",
-    "changelog": "^2\n\t- Ajout gestion d'inventaire dans la liste des joueurs,^2\n\t- Ajout gestion des comptes dans la liste des joueurs,^2\n\t- Ajout gestion des véhicule (voir config.lua) dans la liste des joueurs",
+    "version": "1.6.0",
+    "changelog": "^2\n\t- Compatible ox_inventory (voir config),^2\n\t- Compatible faction (mettre Config.DoubleJob = true pour activer),^2\n\t- Suppression du setjob dans Mon Personnages -> Mes Options (car actions deja disponible via la liste des joueurs et la flemme de rajouter aussi ici)",
 	"link": "https://github.com/SUBLiME-Association/sublime_administration-fivem-esxLegacy"
 }

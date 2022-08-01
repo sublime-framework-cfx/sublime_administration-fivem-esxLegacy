@@ -27,6 +27,8 @@ _Admin.Config = {
     --
     TypeWeight = 'kg',
     --
+    ox_inventory = false,
+    --
     TypeMoney = '$',
     --
     DoubleJob = false, -- false ou 'fbase' (fbase = doublejob qui passe sur la meme fonction ESX.DoesJobExist)

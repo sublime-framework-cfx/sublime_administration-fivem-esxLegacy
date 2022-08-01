@@ -154,10 +154,60 @@ end)
 
 
 if _Admin.Config.DoubleJob == true then
-    CreateThread(function()
-        while true do
-            Wait(3500)
-            print("VEUILLEZ REMETTRE Config.DoubleJob SUR FALSE ou 'fbase' SI VOUS UTILISEZ ESX-LEGACY DE FELLOW, ACTUELLEMENT NON DISPONIBLE SUR TRUE")
+    ESX.RegisterServerCallback(_Admin.Prefix.."GetAllJobsGrades", function(source,cb)
+        local query = "SELECT jobs.name AS `job_name`, jobs.label AS `job_label`, job_grades.grade, job_grades.name AS `grade_name`, job_grades.label AS `grade_label`, job_grades.salary AS `salary` FROM jobs,job_grades WHERE jobs.name = job_grades.job_name"
+        local queryf = "SELECT factions.name AS `faction_name`, factions.label AS `faction_label`, faction_grades.grade, faction_grades.name AS `grade_name`, faction_grades.label AS `grade_label` FROM factions, faction_grades WHERE factions.name = faction_grades.faction_name"
+        local data, dataf = {}, {}
+        local job, faction = {}, {}
+        local r = {}
+        local result1, result2
+        if _Admin.SQLWrapperType == 1 then 
+            print('uniquement disponible pour les gens qui ont esx-legacy version 1.7.5 avec oxmysql')
+        else
+            result1 = MySQL.query.await(query, {})
+            if result1 ~= nil then
+                for _,v in pairs(result1)do
+                    job[v.job_name] = {}
+                    job[v.job_name].label = v.job_label
+                    data[#data+1] = {
+                        job_grade = v.grade,
+                        job_name = v.job_name,
+                        grade_name = v.grade_name,
+                        grade_label = v.grade_label,
+                        salary = v.salary
+                    }
+                end
+                for i = 1, #data do
+                    if job[data[i].job_name] then
+                        table.insert(job[data[i].job_name], {
+                            grade_label = data[i].grade_label, job_grade = data[i].job_grade, grade_name = data[i].grade_name, salary = data[i].salary
+                        })
+                    end
+                end
+            end
+            r.jobs = job
+            result2 = MySQL.query.await(queryf, {})
+            if result2 ~= nil then
+                for _,v in pairs(result2)do
+                    faction[v.faction_name] = {}
+                    faction[v.faction_name].label = v.faction_label
+                    dataf[#dataf+1] = {
+                        faction_grade = v.grade,
+                        faction_name = v.faction_name,
+                        grade_name = v.grade_name,
+                        grade_label = v.grade_label,
+                    }
+                end
+                for i = 1, #dataf do
+                    if faction[dataf[i].faction_name] then
+                        table.insert(faction[dataf[i].faction_name], {
+                            grade_label = dataf[i].grade_label, faction_grade = dataf[i].faction_grade, grade_name = dataf[i].grade_name
+                        })
+                    end
+                end
+            end
+            r.factions = faction
+            cb(r)
         end
     end)
 elseif _Admin.Config.DoubleJob == 'fbase' or _Admin.Config.DoubleJob == false then
@@ -215,15 +265,6 @@ elseif _Admin.Config.DoubleJob == 'fbase' or _Admin.Config.DoubleJob == false th
             end)
         end
     end)
---elseif _Admin.Config.DoubleJob == false then
---    ESX.RegisterServerCallback(_Admin.Prefix..'Get:Jobs-Factions', function(source, cb)
---        local data = {}
---        data.jobs = ESX.GetJobs()
---        --if Config.SetFaction then
---        --    data.factions = ESX.GetFactions()
---        --end
---        cb(data)
---    end)
 end
 
 ESX.RegisterServerCallback(_Admin.Prefix.."GetInventoryTargetPlayers", function(source, cb, target)

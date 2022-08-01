@@ -133,13 +133,16 @@ function _Admin.Panel:Main(rank)
             _Admin.Panel:PlayerDetailsJobs2(_.rank, _Admin.newMenuTitle, _Admin.jobName, _Admin.TargetId ,_Admin.SelectedPlayerLocalId, _Admin.SelectedPlayerName, _Admin.AdminName)
         end)
 
-        --RageUI.IsVisible(_Admin.Menu.sub_allPlayers4, function() -- FACTION ALL PLAYERS 1
-        --    _Admin.Panel:PlayerDetailsFactions1(_.rank, allFactions)
-        --end)
+        if _Admin.Config.DoubleJob == true then
 
-        --RageUI.IsVisible(_Admin.Menu.sub_allPlayers44, function() -- FACTION ALL PLAYERS 2
-        --    _Admin.Panel:PlayerDetailsFactions2(_.rank, )
-        --end)
+            RageUI.IsVisible(_Admin.Menu.sub_allPlayers4, function() -- FACTION ALL PLAYERS 1
+                _Admin.Panel:PlayerDetailsFactions1(_Admin.allFactions)
+            end)
+
+            RageUI.IsVisible(_Admin.Menu.sub_allPlayers44, function() -- FACTION ALL PLAYERS 2
+                _Admin.Panel:PlayerDetailsFactions2(_.rank, _Admin.newMenuTitle, _Admin.factionName, _Admin.TargetId ,_Admin.SelectedPlayerLocalId, _Admin.SelectedPlayerName, _Admin.AdminName)
+            end)
+        end
 
         RageUI.IsVisible(_Admin.Menu.sub_myPlayerOptions1, function() -- JOB MY PLAYER 1
             _Admin.Panel:MyPlayerJobs1(_Admin.allJobs)
@@ -149,22 +152,20 @@ function _Admin.Panel:Main(rank)
             _Admin.Panel:MyPlayerJobs2(_Admin.newMenuTitle, _Admin.jobName)
         end)
 
-        --RageUI.IsVisible(_Admin.Menu.sub_myPlayerOptions2, function() -- FACTION MY PLAYER 1
-        --    _Admin.Panel:MyPlayerFactions1(_.rank, allFactions)
-        --end)
+        if _Admin.Config.DoubleJob == true then
+            
+            RageUI.IsVisible(_Admin.Menu.sub_myPlayerOptions2, function() -- FACTION MY PLAYER 1
+                _Admin.Panel:MyPlayerFactions1(_Admin.allFactions)
+            end)
 
-        --RageUI.IsVisible(_Admin.Menu.sub_myPlayerOptions22, function() -- FACTION MY PLAYER 2
-        --    _Admin.Panel:MyPlayerFactions2(_.rank, )
-        --end)
+            RageUI.IsVisible(_Admin.Menu.sub_myPlayerOptions22, function() -- FACTION MY PLAYER 2
+                _Admin.Panel:MyPlayerFactions2(_Admin.newMenuTitle, _Admin.factionName)
+            end)
+        end
 
         RageUI.IsVisible(_Admin.Menu.sub_allplayerInventory, function() -- INVENTORY PLAYER TARGET
             _Admin.Panel:TargetInventory(_Admin.TargetInventory, _Admin.TargetId, _Admin.TargetWeight, _Admin.TargetMaxWeight)
         end)
-
-        --RageUI.IsVisible(_Admin.Menu.sub_allplayerInventory, function() -- INVENTORY2 PLAYER TARGET
-        --    _Admin.Panel:MyPlayerJobs2(_Admin.newMenuTitle, _Admin.jobName)
-        --    _Admin.Panel:TargetInventory(_Admin.TargetInventory)
-        --end) 
 
         RageUI.IsVisible(_Admin.Menu.sub_allplayerAccounts, function() -- INVENTORY PLAYER TARGET
             _Admin.Panel:TargetAccounts(_Admin.TargetAccounts, _Admin.TargetId)
@@ -211,12 +212,12 @@ function _Admin.Panel:Main(rank)
         and not RageUI.Visible(_Admin.Menu.sub_ownerManagementStaff)
         and not RageUI.Visible(_Admin.Menu.sub_allPlayers3) -- Job1
         and not RageUI.Visible(_Admin.Menu.sub_allPlayers33) -- Job2
-        --and not RageUI.Visible(_Admin.Menu.sub_allPlayers4) -- Faction1
-        --and not RageUI.Visible(_Admin.Menu.sub_allPlayers44) -- Faction2
+        and not RageUI.Visible(_Admin.Menu.sub_allPlayers4) -- Faction1
+        and not RageUI.Visible(_Admin.Menu.sub_allPlayers44) -- Faction2
         and not RageUI.Visible(_Admin.Menu.sub_myPlayerOptions1) -- Job1
         and not RageUI.Visible(_Admin.Menu.sub_myPlayerOptions11) -- Job2
-        --and not RageUI.Visible(_Admin.Menu.sub_myPlayerOptions2) -- Faction1
-        --and not RageUI.Visible(_Admin.Menu.sub_myPlayerOptions22) -- Faction2
+        and not RageUI.Visible(_Admin.Menu.sub_myPlayerOptions2) -- Faction1
+        and not RageUI.Visible(_Admin.Menu.sub_myPlayerOptions22) -- Faction2
         and not RageUI.Visible(_Admin.Menu.sub_allplayerInventory) -- Inventory target
         and not RageUI.Visible(_Admin.Menu.sub_allplayerAccounts) -- Accounts target
         and not RageUI.Visible(_Admin.Menu.sub_allPlayers5) -- Vehicle1

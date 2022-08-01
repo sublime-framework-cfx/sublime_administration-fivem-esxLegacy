@@ -30,12 +30,8 @@ function _Admin.Menu.Create()
     -- v 1.4
     _Admin.Menu.sub_allPlayers3 = RageUI.CreateSubMenu(_Admin.Menu.sub_allPlayers2, cache.playerName, "GESTION JOB")
     _Admin.Menu.sub_allPlayers33 = RageUI.CreateSubMenu(_Admin.Menu.sub_allPlayers3, "", "GESTION JOB - GRADE")
-    --_Admin.Menu.sub_allPlayers4 = RageUI.CreateSubMenu(_Admin.Menu.sub_allPlayers2, cache.playerName, "GESTION FACTION")
-    --_Admin.Menu.sub_allPlayers44 = RageUI.CreateSubMenu(_Admin.Menu.sub_allPlayers4, "", "GESTION FACTION - GRADE")
     _Admin.Menu.sub_myPlayerOptions1 = RageUI.CreateSubMenu(_Admin.Menu.sub_myPlayerOptions, cache.playerName, "GESTION JOB")
     _Admin.Menu.sub_myPlayerOptions11 = RageUI.CreateSubMenu(_Admin.Menu.sub_myPlayerOptions1, "", "GESTION JOB - GRADE")
-    --_Admin.Menu.sub_myPlayerOptions2 = RageUI.CreateSubMenu(_Admin.Menu.sub_myPlayerOptions, cache.playerName, "GESTION FACTION")
-    --_Admin.Menu.sub_myPlayerOptions22 = RageUI.CreateSubMenu(_Admin.Menu.sub_myPlayerOptions2, "", "GESTION FACTION - GRADE")
 
     -- v 1.5
     _Admin.Menu.sub_allplayerInventory = RageUI.CreateSubMenu(_Admin.Menu.sub_allPlayers2, cache.playerName, "GESTION - INVENTORY")
@@ -44,4 +40,11 @@ function _Admin.Menu.Create()
     _Admin.Menu.sub_allPlayers51 = RageUI.CreateSubMenu(_Admin.Menu.sub_allPlayers5, cache.playerName, "CATEGORIE - VEHICULES")
     _Admin.Menu.sub_allPlayers55 = RageUI.CreateSubMenu(_Admin.Menu.sub_allPlayers5, "", "ACTION SUR LE VEHICULE")
     _Admin.Menu.sub_allPlayers555 = RageUI.CreateSubMenu(_Admin.Menu.sub_allPlayers55, "", "TRANSFEREZ LE VEHICULE A")
+
+    -- v 1.6
+    _Admin.Menu.sub_allPlayers4 = RageUI.CreateSubMenu(_Admin.Menu.sub_allPlayers2, cache.playerName, "GESTION FACTION")
+    _Admin.Menu.sub_allPlayers44 = RageUI.CreateSubMenu(_Admin.Menu.sub_allPlayers4, "", "GESTION FACTION - GRADE")
+    _Admin.Menu.sub_myPlayerOptions2 = RageUI.CreateSubMenu(_Admin.Menu.sub_myPlayerOptions, cache.playerName, "GESTION FACTION")
+    _Admin.Menu.sub_myPlayerOptions22 = RageUI.CreateSubMenu(_Admin.Menu.sub_myPlayerOptions2, "", "GESTION FACTION - GRADE")
+
 end

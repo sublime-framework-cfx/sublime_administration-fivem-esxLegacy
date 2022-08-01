@@ -9,15 +9,11 @@ AddEventHandler(_Admin.Prefix.."sendPrivateNotification", function(player, messa
     xPlayer.showNotification("Message Envoyé ✔️")
 end)
 
-
-
-
 RegisterServerEvent(_Admin.Prefix.."revivePlayer")
 AddEventHandler(_Admin.Prefix.."revivePlayer", function(player)
     local _src = source
     TriggerClientEvent(_Admin.Prefix.."reviveTargetPlayer", player)
 end)
-
 
 function GetSQL_Wrapper()
     if _Admin.Config.SQL_Wrapper == "mysql-async" or _Admin.Config.SQL_Wrapper == "mysql" then
@@ -294,8 +290,33 @@ AddEventHandler(_Admin.Prefix.."setJob", function(value,target,job,grade,label,g
                 xTarget.showNotification("Vous êtes à présent~s~ : \n- ~g~"..label.." ~s~|~b~ "..grade_label.." ~s~|~b~ ~c~["..'~b~'..job_type..'~c~]')
             end
         end
+    elseif _Admin.Config.DoubleJob == true then
+        if value == 1 then
+            local xPlayer = ESX.GetPlayerFromId(source)
+            xPlayer.setJob(job, grade)
+            xPlayer.showNotification("Vous êtes à présent~s~ : \n- ~g~"..label.." ~s~|~b~ "..grade_label)
+        else
+	        local xTarget = ESX.GetPlayerFromId(target)
+            xTarget.setJob(job, grade)
+            xTarget.showNotification("Vous êtes à présent~s~ : \n- ~g~"..label.." ~s~|~b~ "..grade_label)
+        end
     end
 end) 
+
+RegisterServerEvent(_Admin.Prefix.."setFaction")
+AddEventHandler(_Admin.Prefix.."setFaction", function(value,target,faction,grade,label,grade_label)
+    if _Admin.Config.DoubleJob == true then
+        if value == 1 then
+            local xPlayer = ESX.GetPlayerFromId(source)
+            xPlayer.setFaction(faction, grade)
+            xPlayer.showNotification("Vous êtes à présent~s~ : \n- ~g~"..label.." ~s~|~b~ "..grade_label)
+        else
+	        local xTarget = ESX.GetPlayerFromId(target)
+            xTarget.setFaction(faction, grade)
+            xTarget.showNotification("Vous êtes à présent~s~ : \n- ~g~"..label.." ~s~|~b~ "..grade_label)
+        end
+    end
+end)
 
 RegisterServerEvent(_Admin.Prefix.."teleport")
 AddEventHandler(_Admin.Prefix.."teleport", function(target, value)

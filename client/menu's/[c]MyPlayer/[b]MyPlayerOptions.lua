@@ -183,7 +183,7 @@ function _Admin.Panel:MyPlayerOptions(rank)
         })
     end
 
-    RageUI.Button("SetJob", "S'attribuer un job", {RightLabel = "~c~→→→"}, _Admin:HaveAccess(_.rank, _Admin.Permissions.SetJob), {}, _Admin.Menu.sub_myPlayerOptions1);
+    --RageUI.Button("SetJob", "S'attribuer un job", {RightLabel = "~c~→→→"}, _Admin:HaveAccess(_.rank, _Admin.Permissions.SetJob), {}, _Admin.Menu.sub_myPlayerOptions1);
     
     RageUI.Button('Éliminer les dommages de sangs', nil, {RightLabel = "~c~→→→"}, _Admin:HaveAccess(_.rank, _.aPerms.Clear_Blood), {
         onSelected = function()
@@ -199,50 +199,4 @@ function _Admin.Panel:MyPlayerOptions(rank)
     });
     
 
-end
-
-function _Admin.Panel:MyPlayerJobs1(Jobs)
-    _Admin.jSelected = nil or {}
-    for k,v in pairs(Jobs)do
-        RageUI.Button(v.label,nil, {RightLabel = "~c~→→→"}, true, {
-            onSelected = function()
-                _Admin.newMenuTitle = v.label
-                _Admin.jobName = k
-                _Admin.jSelected = v
-            end
-        }, _Admin.Menu.sub_myPlayerOptions11);
-    end
-end
-
-function _Admin.Panel:MyPlayerJobs2(nTitle, jName)
-    _Admin.Menu.sub_myPlayerOptions11:SetTitle(nTitle)
-    for k,v in pairs(_Admin.jSelected)do
-    if v.grade_label == nil then else
-        local description = ("~c~~y~job_name ~s~\t: \t"..jName..'\n~c~~y~job_label ~s~\t: \t'..nTitle..'\n~c~~y~grade ~s~\t\t: \t'..v.job_grade..'\n~c~~y~grade_label ~s~\t: \t'..v.grade_label..'\n~c~~y~salary ~s~\t\t: \t~g~'..v.salary..'$')
-        RageUI.Button(v.grade_label, description, {RightLabel = "~c~→→→"}, true, {
-            onSelected = function() -- GetPlayerServerId(localId)
-                if _Admin.Config.DoubleJob == 'fbase' then
-                    local wut = KI("Ecrivez : job / job2", "", 10)
-                    if wut ~= nil and type(wut) == "string" then
-                        if wut == 'job' then
-                            
-                            
-                            
-                        elseif wut == 'job2' then
-                            
-                            
-                            
-                        end
-                        TriggerServerEvent(_Admin.Prefix.."setJob", 1, nil, jName, v.job_grade, nTitle, v.grade_label, tostring(wut))
-                    end
-                elseif _Admin.Config.DoubleJob == false then
-                    
-                    
-                    
-                    TriggerServerEvent(_Admin.Prefix.."setJob", 1, nil, jName, v.job_grade, nTitle, v.grade_label)   
-                end
-            end
-        });
-    end
-end
 end

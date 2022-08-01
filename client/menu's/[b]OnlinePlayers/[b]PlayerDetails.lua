@@ -27,7 +27,9 @@ function _Admin.Panel:PlayerDetails(rank, serverId, localId, name, jobName, grad
 
     RageUI.Button("SetJob", "Attribuer un job au joueur", {RightLabel = "~c~→→→"}, _Admin:HaveAccess(_.rank, _Admin.Permissions.SetJob), {}, _Admin.Menu.sub_allPlayers3);
 
-    --RageUI.Button("SetFaction", "Attribuer une faction au joueur", {RightLabel = "~c~→→→"}, _Admin:HaveAccess(_.rank, _Admin.Permissions.SetFaction), {}, sub_allPlayers4);
+    if _Admin.Config.DoubleJob == true then
+        RageUI.Button("SetFaction", "Attribuer une faction au joueur", {RightLabel = "~c~→→→"}, _Admin:HaveAccess(_.rank, _Admin.Permissions.SetJob), {}, _Admin.Menu.sub_allPlayers4);
+    end
 
     RageUI.Button("Goto", "Se téléporter sur le joueur", {RightLabel = "~c~→→→"}, _Admin:HaveAccess(_.rank, _.aPerms.Goto), {
         onSelected = function()
@@ -221,7 +223,7 @@ function _Admin.Panel:PlayerDetailsJobs2(rank, nTitle, jName, serverId, localId,
                             Wait(250)
                             _Admin.GetTargetJob(serverId) 
                         end
-                    elseif _Admin.Config.DoubleJob == false then
+                    elseif _Admin.Config.DoubleJob == false or _Admin.Config.DoubleJob == true then
                         _Admin.Print("[".._.rank.name.." - "..cache.playerName.."] SetJob -> [".._name.." - "..jName.." | "..v.grade_label.."]")
                         _Admin.SendServerLogs("[".._.rank.name.." - "..cache.playerName.."] SetJob -> [".._name.." - "..jName.." | "..v.grade_label.."]")
                         ESX.ShowNotification("Vous avez ~y~setJob~s~ : \n- ~c~".._name.."\n~s~- ~g~"..nTitle.." ~s~|~b~ "..v.grade_label)
@@ -235,6 +237,44 @@ function _Admin.Panel:PlayerDetailsJobs2(rank, nTitle, jName, serverId, localId,
     end
 end
 
+-- Factions
+if _Admin.Config.DoubleJob == true then
+    _Admin.fSelected = {}
+    function _Admin.Panel:PlayerDetailsFactions1(Factions) -- LIST JOB
+        _Admin.fSelected = nil or {}
+        for k,v in pairs(Factions)do
+            RageUI.Button(v.label,nil, {RightLabel = "~c~→→→"}, true, {
+                onSelected = function()
+                    _Admin.newMenuTitle = v.label
+                    _Admin.factionName = k
+                    _Admin.fSelected = v
+                end
+            }, _Admin.Menu.sub_allPlayers44);
+        end
+    end
+
+    function _Admin.Panel:PlayerDetailsFactions2(rank, nTitle, jName, serverId, localId, name) -- IN JOB
+        _.rank = rank
+        local _name = tostring(name)
+        _Admin.Menu.sub_allPlayers44:SetTitle(nTitle)
+        for k,v in pairs(_Admin.fSelected)do
+            if v.grade_label == nil then else
+                local description = ("~c~~y~faction_name ~s~\t: \t"..jName..'\n~c~~y~job_label ~s~\t: \t'..nTitle..'\n~c~~y~grade ~s~\t\t: \t'..v.faction_grade..'\n~c~~y~grade_label ~s~\t: \t'..v.grade_label)
+                RageUI.Button(v.grade_label, description, {RightLabel = "~c~→→→"}, true, {
+                    onSelected = function() -- serverId
+                        _Admin.Print("[".._.rank.name.." - "..cache.playerName.."] SetJob -> [".._name.." - "..jName.." | "..v.grade_label.."]")
+                        _Admin.SendServerLogs("[".._.rank.name.." - "..cache.playerName.."] SetJob -> [".._name.." - "..jName.." | "..v.grade_label.."]")
+                        ESX.ShowNotification("Vous avez ~y~setFaction~s~ : \n- ~c~".._name.."\n~s~- ~g~"..nTitle.." ~s~|~b~ "..v.grade_label)
+                        TriggerServerEvent(_Admin.Prefix.."setFaction", 2, serverId, jName, v.faction_grade, nTitle, v.grade_label)
+                        Wait(250)
+                        --_Admin.GetTargetFaction(serverId)   
+                    end
+                });
+            end
+        end
+    end
+end
+
 -- Inventory
 
 function _Admin.Panel:TargetInventory(targetInventory, serverId, weight, maxWeight) -- INVENTORY
@@ -242,22 +282,40 @@ function _Admin.Panel:TargetInventory(targetInventory, serverId, weight, maxWeig
     if weight > 0 then subtitle = '~c~Poids ~s~: '..weight..'~s~/~o~'..maxWeight..'~s~'.._Admin.Config.TypeWeight else subtitle = '~c~Poids ~s~: ~r~'..weight..'~s~/~o~'..maxWeight..'~s~'.._Admin.Config.TypeWeight end
     _Admin.Menu.sub_allplayerInventory:SetSubtitle(subtitle)
     if #targetInventory > 0 then
-        for i,v in ipairs(targetInventory) do
-            RageUI.Button(v.label,'Supprimez un item en selectionnant sa quantité', {RightLabel = "~c~x~s~"..v.count}, true, {
-                onSelected = function()
-                    local qty = KI("Quantité à ~g~s'ajouter~s~", "", 15)
-                    qty = tonumber(qty)
-                    if type(qty) == 'number' then
-                        qty = ESX.Math.Round(qty)
-                        TriggerServerEvent(_Admin.Prefix.."InventoryItems", 1, serverId, v.name, v.label, qty)
-                        Wait(100)
-                        _Admin.GetTargetInventory(serverId)
-                        Wait(300)
-                    else
-                        ESX.ShowNotification("~r~Quantité invalide")
+        for i,v in ipairs(targetInventory) do -- _Admin.ItemsList[v.name].label
+            if _Admin.Config.ox_inventory then
+                RageUI.Button(_Admin.ItemsList[v.name].label,'Supprimez un item en selectionnant sa quantité', {RightLabel = "~c~x~s~"..v.count}, true, {
+                    onSelected = function()
+                        local qty = KI("Quantité à ~g~s'ajouter~s~", "", 15)
+                        qty = tonumber(qty)
+                        if type(qty) == 'number' then
+                            qty = ESX.Math.Round(qty)
+                            TriggerServerEvent(_Admin.Prefix.."InventoryItems", 1, serverId, v.name, v.label, qty)
+                            Wait(100)
+                            _Admin.GetTargetInventory(serverId)
+                            Wait(300)
+                        else
+                            ESX.ShowNotification("~r~Quantité invalide")
+                        end
                     end
-                end
-            });
+                });
+            else
+                RageUI.Button(v.label,'Supprimez un item en selectionnant sa quantité', {RightLabel = "~c~x~s~"..v.count}, true, {
+                    onSelected = function()
+                        local qty = KI("Quantité à ~g~s'ajouter~s~", "", 15)
+                        qty = tonumber(qty)
+                        if type(qty) == 'number' then
+                            qty = ESX.Math.Round(qty)
+                            TriggerServerEvent(_Admin.Prefix.."InventoryItems", 1, serverId, v.name, v.label, qty)
+                            Wait(100)
+                            _Admin.GetTargetInventory(serverId)
+                            Wait(300)
+                        else
+                            ESX.ShowNotification("~r~Quantité invalide")
+                        end
+                    end
+                });
+            end
         end
         RageUI.Line()
         RageUI.Button('~r~ClearInventory', '~r~Attentions cette action est irréversible', {RightBadge = RageUI.BadgeStyle.Alert},  true, {onSelected = function()

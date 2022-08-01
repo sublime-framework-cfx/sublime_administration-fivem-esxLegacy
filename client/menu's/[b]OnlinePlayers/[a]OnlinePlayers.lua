@@ -9,8 +9,6 @@ local _ = {
 _Admin.AdminName = _Admin.AdminName or _Admin.adminName
 _Admin.TargetId = _Admin.TargetId or 0
 _Admin.SelectedPlayerName = _Admin.SelectedPlayerName or ''
---_Admin.TargetJobGradeLabel = _Admin.TargetJobGradeLabel or ''
---_Admin.TargetJobLabel = _Admin.TargetJobLabel or ''
 _Admin.SelectedPlayerLocalId = _Admin.SelectedPlayerLocalId or 0
 function _Admin.Panel:OnlinePlayers(rank)
     
@@ -30,7 +28,6 @@ function _Admin.Panel:OnlinePlayers(rank)
     if #playersCache >= 1 then
         _.refresh = false
         for k,v in pairs(playersCache)do
-            --if ESX.GetConfig().Identity == false then named = v.gtaName else named = v.playerName end
             RageUI.Button(v.playerName..' - ('..v.gtaName..')', "ID "..v.serverId.." / Local ID "..v.playerId, {RightLabel = "Server #"..k.." ~c~→→→"}, _Admin:HaveAccess(_.rank, _.aPerms.SelectPlayer.access), {
                 onSelected = function()
                     _Admin.SelectedPlayerLocalId = v.playerId

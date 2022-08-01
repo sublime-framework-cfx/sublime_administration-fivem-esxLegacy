@@ -195,22 +195,25 @@ end
 
 
 
-
-RegisterNetEvent(_Admin.Prefix.."LoadListOfAllItems")
-AddEventHandler(_Admin.Prefix.."LoadListOfAllItems", function(listItems)
-    _Admin.ItemsList = listItems
-end)
+if _Admin.Config.ox_inventory then
+    _Admin.ItemsList = exports.ox_inventory:Items()
+else
+    RegisterNetEvent(_Admin.Prefix.."LoadListOfAllItems")
+    AddEventHandler(_Admin.Prefix.."LoadListOfAllItems", function(listItems)
+        _Admin.ItemsList = listItems
+    end)
+end
 
 
 _Admin.allJobs, _Admin.allFactions = {}, {}
 
 if _Admin.Config.DoubleJob == true then
-    CreateThread(function()
-        while true do
-            Wait(3500)
-            print("VEUILLEZ REMETTRE Config.DoubleJob SUR FALSE ou 'fbase' SI VOUS UTILISEZ ESX-LEGACY DE FELLOW, ACTUELLEMENT NON DISPONIBLE SUR TRUE")
-        end
-    end)
+    function _Admin.GetAllJobsFactions()
+        ESX.TriggerServerCallback(_Admin.Prefix.."GetAllJobsGrades", function(result)
+            _Admin.allJobs = result.jobs
+            _Admin.allFactions = result.factions
+        end)
+    end  
 elseif _Admin.Config.DoubleJob == 'fbase' or _Admin.Config.DoubleJob == false then
     function _Admin.GetAllJobsFactions()
         ESX.TriggerServerCallback(_Admin.Prefix.."GetAllJobsGrades", function(result)
