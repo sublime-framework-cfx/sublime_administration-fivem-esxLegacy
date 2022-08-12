@@ -1,7 +1,7 @@
 {
     "enable": true,
 	"script": "sublime_administration",
-    "version": "1.6.0",
-    "changelog": "^2\n\t- Compatible ox_inventory (voir config),^2\n\t- Compatible faction (mettre Config.DoubleJob = true pour activer),^2\n\t- Suppression du setjob dans Mon Personnages -> Mes Options (car actions deja disponible via la liste des joueurs et la flemme de rajouter aussi ici)",
+    "version": "1.6.1",
+    "changelog": "^2\n\t- ^3Correction: ^7Admin visible en noclip désormais non visible (ainsi que le véhicule si l'admin active le noclip dans un véhicule)",
 	"link": "https://github.com/SUBLiME-Association/sublime_administration-fivem-esxLegacy"
 }

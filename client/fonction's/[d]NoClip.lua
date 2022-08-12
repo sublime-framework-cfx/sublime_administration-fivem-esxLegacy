@@ -71,6 +71,7 @@ function _Admin.NoClip()
 			SetEntityHeading(NoClipEntity, heading);
 		end	
 		SetEntityCoordsNoOffset(NoClipEntity, newPos.x, newPos.y, newPos.z, true, true, true)
+		SetEntityVisible(PlayerPedId(), false, 0)
 		SetLocalPlayerVisibleLocally(true);
 		Citizen.Wait(0)
 	end
@@ -91,12 +92,16 @@ function _Admin.ToggleNoClip(rank_name, rank_grade)
         SetEntityAlpha(NoClipEntity, 51, 0)
         if(NoClipEntity ~= PlayerPedId()) then
             SetEntityAlpha(PlayerPedId(), 51, 0)
+			SetEntityVisible(NoClipEntity, false, 0)
         end
+		SetEntityVisible(PlayerPedId(), false, 0)
     else
         ResetEntityAlpha(NoClipEntity)
         if(NoClipEntity ~= PlayerPedId()) then
             ResetEntityAlpha(PlayerPedId())
+			SetEntityVisible(NoClipEntity, true, 0)
         end
+		SetEntityVisible(PlayerPedId(), true, 0)
     end
     SetEntityCollision(NoClipEntity, _Admin.NoClipStatus, _Admin.NoClipStatus)
     FreezeEntityPosition(NoClipEntity, not _Admin.NoClipStatus)
