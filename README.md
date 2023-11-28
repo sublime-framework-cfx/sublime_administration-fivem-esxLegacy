@@ -1,5 +1,4 @@
 # sublime_administration
-# TELECHARGEZ LA RESSOURCE ICI : https://github.com/SUP2Ak/sublime_administration
 
 - __dependency__ : ``es_extended LEGACY``
 

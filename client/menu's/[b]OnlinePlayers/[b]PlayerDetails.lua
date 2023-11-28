@@ -630,6 +630,14 @@ function _Admin.Panel:PlayerDetailsVehicle2(rank, plate, stored, data, label, na
         });
     end
     RageUI.Line()
+    RageUI.Button('Give Key', nil, {RightBadge = RageUI.BadgeStyle.Tick}, true, {
+        onSelected = function()
+            --TriggerServerEvent(_Admin.Prefix.."owned_vehicles", 3, plate, _Admin.TargetId, label, name, nil, nil, price)
+            --TriggerServerEvent('supv_carkey:registerKeyFromVehicle', plate, GetDisplayNameFromVehicleModel(data.model), _Admin.TargetId)
+            exports.supv_carkey:GiveCarKeyStrict(plate, GetDisplayNameFromVehicleModel(data.model), _Admin.TargetId)
+            Wait(200)
+        end
+    });
     RageUI.Button('Transferez le véhicule', '~r~ATTENTION! ~y~Vous allez changez le propriétaire du véhicule!', {RightBadge = RageUI.BadgeStyle.Alert}, true, {}, _Admin.Menu.sub_allPlayers555);
     RageUI.Button('Vendre le véhicule', '~r~ATTENTION! ~y~Vous allez supprimez le véhicule en base de donnée!\n~g~Le joueur sera remboursé.', {RightBadge = RageUI.BadgeStyle.Alert}, true, {
         onSelected = function()

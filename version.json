@@ -1,7 +1,4 @@
 {
-    "enable": true,
 	"script": "sublime_administration",
-    "version": "0.0.0",
-    "changelog": "^2\n\t- ^3Re télécharger la ressource sur le github de SUP2Ak si vous êtes sur la template de fellow allez dans release et prenez la version 1.7f sinon prenez 1.7",
-	"link": "https://github.com/SUP2Ak/sublime_administration"
+    "version": "1.7"
 }
