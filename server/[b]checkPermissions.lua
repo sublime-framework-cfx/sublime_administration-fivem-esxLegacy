@@ -10,7 +10,7 @@ function _Admin.CheckOwnerPermissions(xPlayer)
     if xPlayer then
         if _Admin.MainUser[xPlayer.identifier] then return true end
     end
-    return false end
+    return false
 end
 
 
